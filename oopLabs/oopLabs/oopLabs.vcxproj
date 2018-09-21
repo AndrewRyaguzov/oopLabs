@@ -151,13 +151,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="classLegacyMatrix.h" />
     <ClInclude Include="classLegacyPrMatrix.h" />
     <ClInclude Include="classMatrix.h" />
+    <ClInclude Include="exceptionClassMatrix.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="IQueueClass.h" />
+    <ClInclude Include="queueClass_one.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="classLegacyMatrix.cpp" />
     <ClCompile Include="classLegacyPrMatrix.cpp" />
     <ClCompile Include="classMatrix.cpp" />
+    <ClCompile Include="exceptionClassMatrix.cpp" />
     <ClCompile Include="friendFunctions.cpp" />
     <ClCompile Include="oopLabs.cpp" />
     <ClCompile Include="pch.cpp">
@@ -166,6 +172,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="queueClass_one.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

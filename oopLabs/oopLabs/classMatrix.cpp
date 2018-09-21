@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "classMatrix.h"
+#include "exceptionClassMatrix.h"
+#include <cctype> //только ради isdigit
 
 classMatrix::classMatrix()
 {
@@ -9,7 +11,7 @@ classMatrix::classMatrix()
 classMatrix::classMatrix( int inputOrder, int *inputNums )
 {	
 	setOrder( inputOrder );
-	input( inputNums );
+	inputMatrix( inputNums );
 	isCopy = false;
 }
 
@@ -18,9 +20,8 @@ classMatrix::classMatrix( const classMatrix & inp )
 	std::cout << " copy construct " << std::endl;
 
 	this->setOrder( inp.order );
-	this->input( inp.matrix );
+	this->inputMatrix( inp.matrix );
 	isCopy = true;
-
 }
 
 classMatrix::~classMatrix()
@@ -38,15 +39,25 @@ classMatrix &classMatrix::operator+( classMatrix &rght )
 
 int classMatrix::operator[]( const int &index ) const
 {
-	if (index > size) return 1;
+	try
+	{
+		//if (index > size) throw exceptionClassMatrix("out of range", size, index);
+		if (index > size) throw exceptionClassMatrix();
+	}
+	catch ( exceptionClassMatrix &ex )
+	{
+		std::cout << "[EXCEPTION] : [out of range]" << "puted: " << index << " max: " << size << std::endl;
+		return 1;
+	}
 	return this->matrix[ index - 1 ];
 }
+
 
 classMatrix &classMatrix::operator=( classMatrix & inp )
 {
 	order = inp.order;
 	size = order * order;
-	this->input( inp.matrix );
+	this->inputMatrix( inp.matrix );
 	return *this;
 }
 
@@ -55,20 +66,52 @@ void classMatrix::operator()()
 	determinant = fD(order, matrix);
 }
 
-void classMatrix::setOrder( int inputOrder )
+inline void classMatrix::setOrder( int inputOrder )
 {
 	order = inputOrder;
 	size = order * order;
 }
 
-void classMatrix::input( int * inputNums )
+void classMatrix::setOrder()
 {
-	if (order < 1 && size < 1) return;
+	std::cin >> order;
+	size = order * order;
+}
 
-	matrix = new int[ size ];
-	for (int i = 0; i < size; i++)
+void classMatrix::inputMatrix( int * inputNums )
+{
+	try
 	{
-		matrix[ i ] = inputNums[ i ];
+		if (order < 1 && size < 1) throw exceptionClassMatrix( );
+		matrix = new int[size];
+		for (int i = 0; i < size; i++)
+		{
+			matrix[i] = inputNums[i];
+		}
+	}
+	catch ( exceptionClassMatrix &ex )
+	{
+		std::cerr << "[EXCEPTION] : [empty order]" << std::endl;
+	}
+}
+
+void classMatrix::inputAll()
+{
+	std::cout << "input order: ";
+	std::cin >> order;
+	size = order * order;
+	std::cout << "input matrix:" << std::endl;
+	matrix = new int[order];
+
+	std::cin.exceptions(std::istream::failbit | std::istream::badbit);
+	try 
+	{
+		for ( int i = 0; i < size; i++)
+			std::cin >> matrix[ i ];
+	}
+	catch (...)
+	{
+		std::cerr << "NaN" << std::endl;
 	}
 }
 

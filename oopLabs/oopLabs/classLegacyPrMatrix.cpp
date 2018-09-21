@@ -5,6 +5,6 @@ classLegacyPrMatix::classLegacyPrMatix(int col, int row, int * matrix)
 {
 	colums = col;
 	rows = row;
-	input( matrix );
+	inputMatrix( matrix );
 	isCopy = false;
 }

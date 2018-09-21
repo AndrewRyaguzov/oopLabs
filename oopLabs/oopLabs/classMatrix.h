@@ -21,8 +21,10 @@ protected:
 	//static int count;
 
 public:
+	void setOrder();
 	void setOrder( int );
-	void input( int * );
+	void inputMatrix( int * );
+	void inputAll();
 
 	void transponMatrix();
 	void findDeterminant();
@@ -39,6 +41,7 @@ public:
 
 	friend std::ifstream& binRead( std::ifstream &, classMatrix & );
 	friend std::ofstream& binWrite( std::ofstream &, classMatrix & );
+
 };
 
 int fD(int, int*);
