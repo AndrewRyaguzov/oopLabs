@@ -1,0 +1,3 @@
+﻿  oopLabs.cpp
+d:\develop_git\ooplabs\ooplabs\ooplabs\ooplabs.cpp(40): error C2664: "classMatrix::classMatrix(const classMatrix &)": невозможно преобразовать аргумент 2 из "int [4][4]" в "int *[]"
+  d:\develop_git\ooplabs\ooplabs\ooplabs\ooplabs.cpp(40): note: Типы, на которые указывают указатели, не связаны; для преобразования требуется reinterpret_cast, приведение в стиле С или приведение в стиле функции

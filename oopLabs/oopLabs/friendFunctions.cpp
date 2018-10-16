@@ -17,6 +17,12 @@ std::istream & operator>>( std::istream &cl, classMatrix &obj )
 	return cl;
 }
 
+std::ofstream &operator<<( std::ostream &cl, classMatrix &obj )
+{
+	std::cout << " << ";
+	obj.showMatrix();
+}
+
 std::ifstream &operator>>( std::ifstream &readStream, classMatrix &obj )
 {
 	readStream.open("dataForClass.txt");

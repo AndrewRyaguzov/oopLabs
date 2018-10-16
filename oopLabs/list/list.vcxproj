@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{EE6A72DB-D75D-479F-9A69-7F1F439BCB1E}</ProjectGuid>
+    <ProjectGuid>{BB87337D-1F27-4474-A6D3-2E93A3976020}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>oopLabs</RootNamespace>
+    <RootNamespace>list</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -151,26 +151,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="classLegacyMatrix.h" />
-    <ClInclude Include="classLegacyPrMatrix.h" />
-    <ClInclude Include="classMatrix.h" />
-    <ClInclude Include="exceptionClassMatrix.h" />
+    <ClInclude Include="IQueueClass.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="queueClass_one.h" />
+    <ClInclude Include="QueueElement.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="classLegacyMatrix.cpp" />
-    <ClCompile Include="classLegacyPrMatrix.cpp" />
-    <ClCompile Include="classMatrix.cpp" />
-    <ClCompile Include="exceptionClassMatrix.cpp" />
-    <ClCompile Include="friendFunctions.cpp" />
-    <ClCompile Include="oopLabs.cpp" />
+    <ClCompile Include="list.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="QueueElement.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

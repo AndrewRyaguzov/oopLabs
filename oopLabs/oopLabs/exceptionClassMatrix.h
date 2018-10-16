@@ -6,7 +6,7 @@ class exceptionClassMatrix :
 	
 {
 public:
-	exceptionClassMatrix();
+	exceptionClassMatrix( const char* );
 	/*
 	exceptionClassMatrix( const char *message, int correct, int overSize);
 	exceptionClassMatrix( const char *message, int );

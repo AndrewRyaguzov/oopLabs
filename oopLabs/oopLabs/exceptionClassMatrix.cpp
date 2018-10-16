@@ -2,9 +2,9 @@
 #include "exceptionClassMatrix.h"
 
 
-exceptionClassMatrix::exceptionClassMatrix()
+exceptionClassMatrix::exceptionClassMatrix( const char* msg )
 {
-	std::cerr << "CATCHED!" << std::endl;
+	std::cerr << "[EXCEPTION] : [" << msg << "] CATCHED!" << std::endl;
 }
 /*
 exceptionClassMatrix::exceptionClassMatrix( const char *message, int correct, int overSize )
