@@ -17,19 +17,41 @@ std::istream & operator>>( std::istream &cl, classMatrix &obj )
 	return cl;
 }
 
-std::ofstream &operator<<( std::ostream &cl, classMatrix &obj )
+std::ostream &operator<<( std::ostream &cl, classMatrix &obj )
 {
-	std::cout << " << ";
-	obj.showMatrix();
+	std::cout << " |";
+
+	for (int i = 0; i < obj.size; i++)
+	{
+		std::cout << obj.matrix[i];
+
+		if (i + 1 != obj.size)
+		{
+			if ((i + 1) % obj.order == 0)
+			{
+				std::cout << '|' << std::endl << " |";
+			}
+			else
+			{
+				std::cout << '\t';
+			}
+		}
+	}
+	std::cout << '|' << std::endl
+		<< std::endl;
+	return cl;
 }
 
 std::ifstream &operator>>( std::ifstream &readStream, classMatrix &obj )
 {
-	readStream.open("dataForClass.txt");
+	readStream.open("text files/dataForClass.txt");
 	if ( readStream.is_open() )
 	{
-		readStream >> obj.order;
-		for (int i = 0; i < obj.order*obj.order; i++)
+		int order_;
+		readStream >> order_;
+		obj.setOrder(order_);
+		obj.matrix = new int[obj.size];
+		for (int i = 0; i < obj.size; i++)
 		{
 			readStream >> obj.matrix[i];
 		}
@@ -39,9 +61,9 @@ std::ifstream &operator>>( std::ifstream &readStream, classMatrix &obj )
 	return readStream;
 }
 
-std::ofstream & operator<<( std::ofstream &writeStream, classMatrix const &obj )
+std::ofstream & operator<<( std::ofstream &writeStream, classMatrix &obj )
 {
-	writeStream.open("dataFromClass.txt");
+	writeStream.open("text files/dataForClass.txt");
 	if ( writeStream.is_open() )
 	{
 		writeStream << obj.order << ' ';
@@ -56,18 +78,29 @@ std::ofstream & operator<<( std::ofstream &writeStream, classMatrix const &obj )
 
 std::ifstream & binRead(std::ifstream & writeBinaryStream, classMatrix &obj )
 {
-	writeBinaryStream.open( "binaryDataForClass.bin", std::ios::binary | std::ios::in );
-	writeBinaryStream.read( reinterpret_cast< char * > ( &obj ), sizeof( classMatrix ) );
-	std::cout << "read bin " << std::endl;
-	writeBinaryStream.close();
+	//writeBinaryStream.open( "text files/binaryDataForClass.bin", std::ios::binary | std::ios::in | std::ios::app );
+	if (writeBinaryStream.is_open())
+	{
+		writeBinaryStream.read(reinterpret_cast<char *> (&obj.order), sizeof(int));
+		writeBinaryStream.read( reinterpret_cast< char * > ( &obj.size ), sizeof( int ) );
+		writeBinaryStream.read( reinterpret_cast< char * > ( &obj.matrix ), obj.size * sizeof( int ));
+	}
+	//writeBinaryStream.close();
 	return writeBinaryStream;
 }
 
 std::ofstream & binWrite(std::ofstream &readBinaryStream, classMatrix &obj )
 {
-	readBinaryStream.open( "binaryDataForClass.bin", std::ios::binary | std::ios::out );
-	readBinaryStream.write( reinterpret_cast< char * > ( &obj ), sizeof( classMatrix ) );
-	readBinaryStream.close();
+	//readBinaryStream.open( "text files/binaryDataForClass.bin", std::ios::binary | std::ios::out );
+	//int matrixSize = obj.size;
+
+	if (readBinaryStream.is_open())
+	{
+		readBinaryStream.write(reinterpret_cast <char *> ( &obj.order ), sizeof(int));
+		readBinaryStream.write(reinterpret_cast <char *> (&obj.size), sizeof(int));
+		readBinaryStream.write(reinterpret_cast<char *> ( &obj.matrix), obj.size * sizeof(int));
+	}
+	//readBinaryStream.close();
 	return readBinaryStream;
 }
 

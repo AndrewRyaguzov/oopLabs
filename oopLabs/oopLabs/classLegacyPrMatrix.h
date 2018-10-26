@@ -4,12 +4,22 @@
 class classLegacyPrMatix : public classMatrix
 {
 public:
-	classLegacyPrMatix() : classMatrix() {};
+	classLegacyPrMatix() : classMatrix() 
+	{
+		std::cout << "legacy_2 contstructed, id - " << id << std::endl;
+	}
 	classLegacyPrMatix( int, int, int * );
+
 private:
 	int colums,
 		rows;
 	//~classLegacyMatix();
-	//void set();
+
+public:
+	void SetColumsRows( int, int );
+	int GetColums()
+	{
+		return colums;
+	}
 
 };

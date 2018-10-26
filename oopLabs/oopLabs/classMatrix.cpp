@@ -2,6 +2,19 @@
 #include "classMatrix.h"
 #include "exceptionClassMatrix.h"
 
+int &classMatrix::mtx::operator[](int j) const
+{
+	try
+	{
+		if (j < 1) throw exceptionClassMatrix(" wrong index! ");
+		return tmp.matrixDouble[i - 1][j - 1];
+	}
+	catch (exceptionClassMatrix &ex)
+	{
+
+	}
+}
+
 classMatrix::classMatrix()
 {
 	isCopy = false;
@@ -16,19 +29,7 @@ classMatrix::classMatrix( int inputOrder, int *inputNums )
 	id = ++count;
 }
 
-/*classMatrix::classMatrix( int inputOrder, int *inputNums[] )
-{
-	setOrder(inputOrder);
-	matrixDouble = new int*[inputOrder];// [inputOrder];
-	for (int i = 0; i < inputOrder; i++)
-		for (int j = 0; j < inputOrder; j++)
-			matrixDouble[i][j] = inputNums[i][j];
-
-	isCopy = false;
-	id = ++count;
-}*/
-
-classMatrix::classMatrix( const classMatrix & inp )
+classMatrix::classMatrix( const classMatrix &inp )
 {
 	this->id = ++count;
 	this->setOrder( inp.order );
@@ -38,18 +39,18 @@ classMatrix::classMatrix( const classMatrix & inp )
 
 classMatrix::~classMatrix()
 {
-	//--count;
-	std::cout << "destruct" << std::endl;
+	std::cout << "destructor - " << id << std::endl;
 	delete[] matrix;
 }
 
-classMatrix &classMatrix::operator+( classMatrix &rght )
+classMatrix classMatrix::operator+( classMatrix &rght )
 {
 	try
 	{
 		if (size != rght.size) throw exceptionClassMatrix("different order of matrices");
 		classMatrix temp;
 		temp.setOrder( order );
+		temp.matrix = new int[ size ];
 		for (int i = 0; i < size; i++)
 			temp.matrix[i] = matrix[i] + rght.matrix[i];
 		return temp;
@@ -60,23 +61,7 @@ classMatrix &classMatrix::operator+( classMatrix &rght )
 	}
 }
 
-int* classMatrix::operator[]( int &index ) const
-{
-	try
-	{
-		if (index > size) throw exceptionClassMatrix("out of range");
-		if (index < 0)  index = -1 * index;
-		return this->matrixDouble[ index - 1 ];
-	}
-	catch ( exceptionClassMatrix &ex )
-	{
-		//std::cout << "[EXCEPTION] : [out of range]" << "puted: " << index << " max: " << size << std::endl;
-		//return -1;
-	}
-}
-
-
-classMatrix &classMatrix::operator=( classMatrix & inp )
+classMatrix &classMatrix::operator=( classMatrix &inp )
 {
 	this->order = inp.order;
 	this->size = order * order;
@@ -89,16 +74,27 @@ void classMatrix::operator()()
 	determinant = fD(order, matrix);
 }
 
+classMatrix::mtx classMatrix::operator[](int & index)
+{
+	{
+		try
+		{
+			if (index < 1) throw exceptionClassMatrix(" wrong index! ");
+			TransformToDoubleMatrix(matrix);
+			return mtx(*this, index);
+		}
+		catch (exceptionClassMatrix &ex)
+		{
+
+		}
+	}
+}
+
+
 inline void classMatrix::setOrder( int inputOrder )
 {
 	if (inputOrder < 0) order = -1 * inputOrder; 
 	else order = inputOrder;	
-	size = order * order;
-}
-
-void classMatrix::setOrder()
-{
-	std::cin >> order;
 	size = order * order;
 }
 
@@ -139,6 +135,18 @@ void classMatrix::inputAll()
 	}
 }
 
+void classMatrix::TransformToDoubleMatrix(int *mtx)
+{
+	matrixDouble = new int *[order];
+	int k = 0;
+	for (int i = 0; i < order; i++)
+	{
+		matrixDouble[i] = new int[order];
+		for (int j = 0; j < order; j++, k++)
+			matrixDouble[i][j] = matrix[k];
+	}
+}
+
 void classMatrix::transponMatrix()
 {
 	int *newMtr = new int [ size ];
@@ -160,7 +168,7 @@ void classMatrix::transponMatrix()
 void classMatrix::findDeterminant()
 {
 	std::cout << std::endl;
-	showMatrix();
+	showMatrix(order);
 	determinant = fD(order, matrix);
 }
 
@@ -207,7 +215,7 @@ int fD(int order, int * smMtx)
 	return detCounter;
 }
 
-void classMatrix::showMatrix()
+void classMatrix::showMatrix( int sl )
 {
 	std::cout << " |";
 	
@@ -217,7 +225,7 @@ void classMatrix::showMatrix()
 
 		if (i + 1 != size)
 		{
-			if ((i + 1) % order == 0)
+			if ((i + 1) % sl == 0)
 			{
 				std::cout << '|' << std::endl << " |";
 			}

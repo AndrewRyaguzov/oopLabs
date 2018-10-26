@@ -1,2 +1,5 @@
-﻿  QueueElement.cpp
+﻿  Queue.cpp
+  list.cpp
+  Создание кода...
+d:\develop_git\ooplabs\ooplabs\list\queue.cpp(153): warning C4715: Queue::Find: значение возвращается не при всех путях выполнения
   list.vcxproj -> D:\develop_git\oopLabs\oopLabs\Debug\list.exe

@@ -1,29 +1,40 @@
 #pragma once
-#include "IQueueClass.h"
+#include <iostream>
 
-class QueueElement : public IQueueClass
+class QueueElement
 {
 public:
 	QueueElement();
-	~QueueElement();
+	virtual ~QueueElement();
 
-	//static int IQueueClass::_id;
-	int ownId;
 private:
-	/*IQueueClass IQueueClass::*last,
-				IQueueClass::*next;
-				*/
-	IQueueClass *_last,
-				*_next;
-	int value;
+	const char* _who = " i'm parent ";
 
 public:
-	
-	void IQueueClass::add( IQueueClass *, int ) override;
-	//void IQueueClass::del( ) override;
-	//void IQueueClass::setByNumber( int ) override;
-	//void IQueueClass::delByNumber(int) override;
-	//void IQueueClass::find() override;
-	//void IQueueClass::show() override;
-	//void IQueueClass::setId(int) override;
+	int Num = 0;
+	bool isEmpty = false;
+
+public:
+	virtual void WhoAreYou()
+	{
+		std::cout << _who << std::endl;
+	}
+};
+
+
+class QueueElementChild : public QueueElement
+{
+public:
+	//QueueElementChild() : QueueElement() {};
+
+private:
+	const char* _who = " i'm child 1 (one) ";
+
+public:
+	virtual void WhoAreYou(void)
+	{
+		std::cout << _who << std::endl;
+		std::cout << " and i can more, then my parent in same named function! " << std::endl;
+	}
+
 };
