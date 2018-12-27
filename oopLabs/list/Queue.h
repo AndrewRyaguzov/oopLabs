@@ -2,28 +2,30 @@
 #include <iostream>
 #include "QueueElement.h"
 
+
 class Queue
 {
 public:
-	Queue();
-	~Queue();
+	Queue(int size) { totalElm = size; }
 
 private:
-	static int countElements;
-	int index;
-	Queue *prev,
-		  *next;
-	QueueElement *_element;
+	int globIndex = 0,
+		totalElm;
+
+	QueueElement *_list = nullptr;
 
 public:
 	void Add( QueueElement*, int );
 	void Del();
 	void AddByIndex( QueueElement*, int, int );
 	void DelByIndex( int );
-	//uint8_t *Find( int );
-	Queue **Find( int num );
+
+	int *Find( int num );
 	void ShowElement( int );
 	void ShowElement( );
 	void ShowFull();
+
+	friend std::ifstream& binRead(std::ifstream &, Queue *&);
+	friend std::ofstream& binWrite(std::ofstream &, Queue *&);
 };
 

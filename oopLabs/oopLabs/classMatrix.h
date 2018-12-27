@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <fstream>
+#include <exception>
 
 class classMatrix
 {
@@ -28,31 +29,31 @@ protected:
 	int  size = 0,
 		*matrix,
 		**matrixDouble,
+		order = 0,
 		id;
 	bool isCopy;
 
 private:
-	int order = 0,
-		determinant;
+	int	determinant;
 	static int count;
 
 public:
-	void setOrder( int );
+	virtual void setOrder( int );
 	void inputMatrix( int * );
 
-	void inputAll();
+	virtual void inputAll();
 
 	void TransformToDoubleMatrix( int * );
 
-	void transponMatrix();
-	void findDeterminant();
-	void showMatrix( int );
+	virtual void transponMatrix();
+	virtual void findDeterminant();
+	virtual void showMatrix(  );
 	void showMatrixInfo();
-	int getDet()
+	virtual int getDet()
 	{
 		return determinant;
 	};
-	int getOrder()
+	virtual int getOrder()
 	{
 		return order;
 	}
@@ -61,7 +62,7 @@ public:
 	classMatrix &operator=( classMatrix &);
 	void operator()();
 	mtx operator[](int& index);
-
+	
 	friend std::istream& operator>>( std::istream &, classMatrix & );
 	friend std::ostream& operator<<( std:: ostream &, classMatrix & );
 	
@@ -71,6 +72,15 @@ public:
 	friend std::ifstream& binRead( std::ifstream &, classMatrix & );
 	friend std::ofstream& binWrite( std::ofstream &, classMatrix & );
 
+};
+
+class exp_mtx : public std::exception
+{
+public:
+	exp_mtx(const char* msg)
+	{
+		std::cerr << "[EXCEPTION] : [" << msg << "] CATCHED!" << std::endl;
+	}
 };
 
 int fD(int, int*);

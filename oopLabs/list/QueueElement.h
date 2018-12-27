@@ -4,37 +4,37 @@
 class QueueElement
 {
 public:
-	QueueElement();
-	virtual ~QueueElement();
-
-private:
-	const char* _who = " i'm parent ";
+	QueueElement()
+	{
+		std::cout << "constr QE" << Num << std::endl;
+	}
+	virtual ~QueueElement()
+	{
+		std::cout << "destruct element - " << Num << std::endl;
+	}
 
 public:
+	QueueElement *prev,
+		*next;
+	int index;
+	int type = 0;
+	virtual int getType() { return type; }
+	const char *_who = "i'm parent";
+	virtual void _whoAre() { std::cout << " " << _who << std::endl; }
 	int Num = 0;
 	bool isEmpty = false;
-
-public:
-	virtual void WhoAreYou()
-	{
-		std::cout << _who << std::endl;
-	}
 };
 
 
 class QueueElementChild : public QueueElement
 {
 public:
-	//QueueElementChild() : QueueElement() {};
-
-private:
-	const char* _who = " i'm child 1 (one) ";
-
-public:
-	virtual void WhoAreYou(void)
+	QueueElementChild()
 	{
-		std::cout << _who << std::endl;
-		std::cout << " and i can more, then my parent in same named function! " << std::endl;
+		std::cout << "constr QEC" << Num << std::endl;
 	}
-
+	int type = 1;
+	int getType() { return type; }
+	const char *_who = "i'm child";
+	void _whoAre() { std::cout << " " << _who << std::endl; }
 };
